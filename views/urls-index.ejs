@@ -1,0 +1,24 @@
+<!-- /views/urls-index.ejs -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>TinyApp</title>
+</head>
+
+<body>
+    <!-- a list or table of the URLs and their shortened forms -->
+    <ul>
+    
+    <% for (const key in urls) { %>
+    <li><%= key %> = <%= urls[key] %></li>
+    <% }; %>
+    
+    </ul> 
+    
+    <!-- link for shortening a new URL href='#'  -->
+    <!--  -->
+</body>
+
+</html>

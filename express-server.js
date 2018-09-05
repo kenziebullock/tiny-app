@@ -38,10 +38,21 @@ app.get('/hello', (request, response) => {
     response.send('<html><body>Hello <b>World</b></body></html>\n');
 });
 
+app.get('/u/:shortURL', (request, response) => {
+    //console.log(response);
+    let longURL = urlDatabase[request.params.shortURL];
+    console.log(longURL);
+    response.redirect(longURL);
+});
+
 app.post('/urls', (request, response) => {
-    console.log(request.body.longURL);
-    urlDatabase[generateRandomString()] = request.body.longURL;
+    //console.log(request.body.longURL);
+    let tempShortUrl = generateRandomString();
+    urlDatabase[tempShortUrl] = request.body.longURL;
     console.log(urlDatabase);
+    //response.writeHead(301);
+    response.redirect(`/urls/${tempShortUrl}`);
+    //response.end('Done');
     // response
     //response.send('generateRandomString()');
     //response.writeHead(301, )

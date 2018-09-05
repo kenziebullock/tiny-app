@@ -18,7 +18,7 @@ let urlDatabase = {
 
 // home page
 app.get('/', (req, res) => {
-    res.send('Hello!');
+    res.render('urls-new');
 });
 
 // database of urls
@@ -27,7 +27,7 @@ app.get('/urls', (req, res) => {
     res.render('urls-index', templateVars);
 });
 
-// new urls
+// new url form
 app.get('/urls/new', (req, res) => {
     res.render('urls-new');
 });
@@ -38,6 +38,16 @@ app.get('/urls/:id', (req, res) => {
     res.render('urls-show', templateVars);
 });
 
+// edit existing url
+app.post('/urls/:id', (req, res) => {
+    // code dealing with edit
+    console.log(req);
+    let targetId = req.params.id;
+
+    urlDatabase[targetId] = req.body.longURL;
+    res.redirect('/urls');
+});
+
 // json
 // app.get('/urls.json', (req, res) => {
 //     res.json(urlDatabase);
@@ -45,9 +55,7 @@ app.get('/urls/:id', (req, res) => {
 
 // redirect to actual url through short url
 app.get('/u/:shortURL', (req, res) => {
-    //console.log(res);
     let longURL = urlDatabase[req.params.shortURL];
-    //console.log(longURL);
     res.redirect(longURL);
 });
 
@@ -61,6 +69,7 @@ app.post('/urls', (req, res) => {
 // delete from database
 app.post('/urls/:id/delete', (req, res) => {
     let targetId = req.params.id;
+    console.log(targetId);
     delete urlDatabase[targetId];
     res.redirect('/urls');
 });

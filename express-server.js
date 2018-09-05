@@ -39,9 +39,9 @@ app.get('/urls/:id', (req, res) => {
 });
 
 // json
-app.get('/urls.json', (req, res) => {
-    res.json(urlDatabase);
-});
+// app.get('/urls.json', (req, res) => {
+//     res.json(urlDatabase);
+// });
 
 // redirect to actual url through short url
 app.get('/u/:shortURL', (req, res) => {
@@ -53,18 +53,15 @@ app.get('/u/:shortURL', (req, res) => {
 
 // create new short url with form
 app.post('/urls', (req, res) => {
-    //console.log(req.body.longURL);
     let tempShortUrl = generateRandomString();
     urlDatabase[tempShortUrl] = req.body.longURL;
-    //console.log(urlDatabase);
     res.redirect(`/urls/${tempShortUrl}`);
-    
 });
 
 // set up server
 const PORT = 8080;
 app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`);
+    console.log(`Listening on port ${PORT}:`);
 });
 
 // function to create random 6-char string for short url

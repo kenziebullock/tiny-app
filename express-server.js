@@ -40,10 +40,7 @@ app.get('/urls/:id', (req, res) => {
 
 // edit existing url
 app.post('/urls/:id', (req, res) => {
-    // code dealing with edit
-    console.log(req);
     let targetId = req.params.id;
-
     urlDatabase[targetId] = req.body.longURL;
     res.redirect('/urls');
 });
@@ -69,7 +66,6 @@ app.post('/urls', (req, res) => {
 // delete from database
 app.post('/urls/:id/delete', (req, res) => {
     let targetId = req.params.id;
-    console.log(targetId);
     delete urlDatabase[targetId];
     res.redirect('/urls');
 });

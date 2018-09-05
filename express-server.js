@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
 const app = express();
 const PORT = 8080;
 
@@ -27,9 +29,15 @@ app.get('/urls.json', (request, respond) => {
     respond.json(urlDatabase);
 });
 
+app.get('/urls/new', (request, respond) => {
+    res.render('urls-new');
+});
+
 app.get('/hello', (request, respond) => {
     respond.send('<html><body>Hello <b>World</b></body></html>\n');
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);

@@ -4,11 +4,12 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-
+app.use(cookieParser());
 // temp database of urls
 let urlDatabase = {
     'b2xVn2': 'http://www.lighthouselabs.ca',

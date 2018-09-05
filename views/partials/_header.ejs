@@ -5,3 +5,18 @@
 </head>
 
 <header><h2>Tiny App</h2></header>
+
+<% if (username) { %>
+    <h6>Username: <%= username %></h6>
+    <form method="POST" action="/logout">
+        <button>Logout</button>
+    </form>
+<% } else { %>
+    <form method="POST" action="/login">
+        <input id="username" name="username" type="text" style="width: 100px">
+        <button type="submit">Submit</button>
+        <h6>Username: <%= username %></h6>
+        
+    </form>
+<% }; %>
+

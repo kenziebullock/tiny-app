@@ -18,18 +18,16 @@ let urlDatabase = {
     'dx5gt2': 'http://www.reddit.com'
 };
 
+
+
 // home page
 app.get('/', (req, res) => {
-    let templateVars = { username: req.cookies['username'] };
-    res.render('urls-new', templateVars);
+    res.render('urls-new');
 });
 
 // database of urls
 app.get('/urls', (req, res) => {
-    let templateVars = { 
-        urls: urlDatabase,
-        username: req.cookies['username']
-    };
+    let templateVars = { urls: urlDatabase };
     res.render('urls-index', templateVars);
 });
 
@@ -40,11 +38,7 @@ app.get('/urls/new', (req, res) => {
 
 // render specific url
 app.get('/urls/:id', (req, res) => {
-    let templateVars = {
-        shortURL: req.params.id, 
-        longURL: urlDatabase,
-        username: req.cookies['username']
-    };
+    let templateVars = { shortURL: req.params.id, longURL: urlDatabase };
     res.render('urls-show', templateVars);
 });
 
@@ -84,12 +78,7 @@ app.post('/urls/:id/delete', (req, res) => {
 app.post('/login', (req, res) => {
     res.cookie('username', req.body.username);
     res.redirect('/urls');
-});
-
-app.post('/logout', (req, res) => {
-    res.clearCookie('username');
-    res.redirect('/urls');
-});
+})
 
 // set up server
 const PORT = 8080;

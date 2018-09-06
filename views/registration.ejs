@@ -1,0 +1,23 @@
+<!-- /views/registration.ejs -->
+<!DOCTYPE html>
+
+<html lang="en">
+
+<% include partials/_header %>
+
+<body>
+    <!-- a form for user registration -->
+    
+    <form method="POST" action="/register" style="margin:150px;">
+        
+        <label for ="email">Enter email:</label>
+        <input id="email" type="text" name="email" placeholder="" style="width: 100px">
+        <label for ="email">Password:</label>
+        <input id="password" type="text" name="password" placeholder="" style="width: 100px">
+        <input type="submit" value="Submit">
+
+    </form>
+    
+</body>
+
+</html>

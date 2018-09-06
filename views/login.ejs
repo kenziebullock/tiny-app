@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <body style="font-size:20px; padding:50px;">
+        <% include partials/_header %>
+        <%  %>
+            <h5><%= %></h5>
+            <form method="POST" action="/logout">
+                <button>Logout</button>
+            </form>
+        <%  %>
+            <form method="POST" action="/login">
+                <label for ="email">Enter email:</label>
+                <input id="email" name="email" type="text" placeholder="Enter email.." style="width: 100px">
+                <label for ="email">Password:</label>
+                <input id="password" name="password" type="text" placeholder="Enter password.." style="width: 100px">
+                <button type="submit">Login</button>
+               
+                
+            </form>
+        <%  %>
+        
+        
+    </body>
+
+</html>

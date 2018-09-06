@@ -7,17 +7,9 @@
 
 <header><h3>Tiny App</h3></header>
 
-<% if (username) { %>
-    <h5><%= username %></h5>
-    <form method="POST" action="/logout">
-        <button>Logout</button>
-    </form>
-<% } else { %>
-    <form method="POST" action="/login">
-        <input id="username" name="username" type="text" placeholder="User Name" style="width: 100px">
-        <button type="submit">Submit</button>
-       
-        
-    </form>
-<% }; %>
-
+<nav>
+    <ul class="nav nav-pills pull-right">
+        <li role="presentation"><a href="/register">Register</a></li>
+        <li role="presentation"><a href="/login">Login</a></li>
+    </ul>
+</nav>

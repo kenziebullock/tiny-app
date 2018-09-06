@@ -24,4 +24,20 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}:`);
 });
 
+// // respond to 404 'not found' error, then pass to error handler
+// app.use((req, res, next) => {
+//   let err = new Error('Nothing here!');
+//   err.status = 404;
+//   next(err);
+// });
+
+// // err handler
+// app.use((err, req, res, next) => {
+//   // renders error page
+//   // console.log(err.stack);
+//   res.status(err.status || 500);
+//   res.render('error');
+//   // next(err);
+// });
+
 module.exports = app;

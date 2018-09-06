@@ -4,18 +4,18 @@
     <title>TinyApp</title>
 </head>
 
-<header><h2>Tiny App</h2></header>
+<header><h3>Tiny App</h3></header>
 
 <% if (username) { %>
-    <h6>Username: <%= username %></h6>
+    <h5><%= username %></h5>
     <form method="POST" action="/logout">
         <button>Logout</button>
     </form>
 <% } else { %>
     <form method="POST" action="/login">
-        <input id="username" name="username" type="text" style="width: 100px">
+        <input id="username" name="username" type="text" placeholder="User Name" style="width: 100px">
         <button type="submit">Submit</button>
-        <h6>Username: <%= username %></h6>
+       
         
     </form>
 <% }; %>

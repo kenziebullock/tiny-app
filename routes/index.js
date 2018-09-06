@@ -19,20 +19,33 @@ router.get('/login', (req, res) => {
 
 // registration page
 router.get('/register', (req, res) => {
-  const templateVars = {
-    urls: urlDatabase,
-    username: req.cookies.username,
-  };
-  res.render('registration', templateVars);
+  // const templateVars = {
+  //   urls: urlDatabase,
+  //   username: req.cookies.username,
+  // };
+  res.render('registration');
 });
 
 // generate new user
 router.post('/register', (req, res, next) => {
-  if (!req.body.email) {
-    res.redirect('/errors');
-  } else if (!req.body.password) {
-    res.redirect('/errors');
+  const { email, password } = req.body;
+  const userArray = Object.values(users);
+  const user = userArray.find(u => u.email === email);
+
+  if (user) {
+    res.status(400);
+    res.send('An account already exists with that email.')
   }
+  if (!req.body.email) {
+    res.status(400);
+    res.send('No email address entered.');
+    // res.redirect('/errors');
+  } else if (!req.body.password) {
+    res.status(400);
+    res.send('No password entered.');
+    // res.redirect('/errors');
+  }
+
   const randomId = generateRandomString();
   users[randomId] = { id: randomId, email: req.body.email, password: req.body.password };
   res.cookie('user_id', randomId);
@@ -48,7 +61,7 @@ router.get('/errors', (req, res) => {
 router.get('/urls', (req, res) => {
   const templateVars = {
     urls: urlDatabase,
-    username: req.cookies.username,
+    // username: req.cookies.username,
   };
   res.render('urls-index', templateVars);
 });
@@ -63,7 +76,7 @@ router.get('/urls/:id', (req, res) => {
   const templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase,
-    username: req.cookies.username,
+    // username: req.cookies.username,
   };
   res.render('urls-show', templateVars);
 });
@@ -105,7 +118,7 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   const userArray = Object.values(users);
   const user = userArray.find(u => u.email === email);
-  const pass = userArray.find(u => u.password === password)
+  const pass = userArray.find(u => u.password === password);
   if (!user) {
     res.redirect('/login');
   }
@@ -113,12 +126,12 @@ router.post('/login', (req, res) => {
     res.redirect('/login');
   }
 
-  // res.cookie('user_id', req.body.user_id);
+  res.cookie('user_id', user.id);
   res.redirect('/');
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 });
 

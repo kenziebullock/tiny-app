@@ -5,22 +5,20 @@
     <link href="../../public/assets/style.css" rel="stylesheet" type="text/css">
 </head>
 
-<header><h3>Tiny App</h3></header>
+<header><h2>Tiny App</h2></header>
 
-<% if (email) { %>
-    <%= email %>
+<% if (user_id) { %>
+    <%= user_id.email %>
     <form method="POST" action="/logout">
         <button>Logout</button>
     </form>
+    <form method="GET" action="/urls">
+        <button>My URLS</button>
+    </form>
 <% } else { %>
-    <nav>
-        <ul class="">
-            <li role=""><a href="/register">Register</a></li>
-            <li role=""><a href="/login">Login</a></li>
-        </ul>
-    </nav>
     
-
+    <button><a href="/register">Register</a></button>
+    <button><a href="/login">Login</a></button>
 
 <% } %>
 

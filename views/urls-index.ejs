@@ -10,20 +10,24 @@
     <ul>
     
     <% for (const key in urls) { %>
-    <li><%= key %> = <%= urls[key].longURL %></li>
-    <form method="POST" action='/urls/<%= key %>/delete'>
+    
+    <% if (user_id.id === urls[key].user_id) { %>
+        <li><%= key %> = <%= urls[key].longURL %></li>
+        <form method="POST" action='/urls/<%= key %>/delete'>
         <button>Delete</button>
     </form>
-    
     <form method="GET" action='/urls/<%= key %>'>
         <button>Edit</button>
     </form>
-    
+    <% } %>
     <% }; %>
     
     </ul> 
     
     <!-- link for shortening a new URL href='#'  -->
+    <form method="GET" action="urls/new">
+        <button>New URL</button>
+    </form>
     <!--  -->
 </body>
 

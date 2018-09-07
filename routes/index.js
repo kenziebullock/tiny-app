@@ -3,27 +3,17 @@ const express = require('express');
 const router = express.Router();
 const users = require('../data/users');
 const urlDatabase = require('../data/urls-database');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 // home page
 router.get('/', (req, res) => {
-  const templateVars = { 
-    users: users,
-    email: req.cookies.email,
-    cookie: req.cookies,
-  };
-  // console.log(templateVars);
-
-  res.render('urls-new', templateVars);
+  res.redirect('login');
 });
 
 // login page
 router.get('/login', (req, res) => {
   const templateVars = {
-    urls: urlDatabase,
-    users: users,
-    email: req.cookies.email,
-    cookie: req.cookies,
+    user_id: req.cookies.user_id,
   };
   res.render('login', templateVars);
 });
@@ -33,30 +23,32 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   const userArray = Object.values(users);
   const user = userArray.find(u => u.email === email);
-  const pass = userArray.find(u => u.password === password);
-  if (!user) {
+  if (!email) {
     res.redirect('/login');
   }
-  if (!pass) {
+  if (!password) {
     res.redirect('/login');
   }
-
-  res.cookie('user_id', user.id);
-  res.cookie('email', email);
-  res.cookie('users', users);
-  console.log(res.cookie);
-  res.redirect('/');
+  bcrypt.compare(password, user.password, (err, result) => {
+    if (result) {
+      // successful login
+      res.cookie('user_id', user);
+      res.redirect('/urls');
+    } else {
+      res.redirect('/login');
+    }
+  });
 });
 
 // registration page
 router.get('/register', (req, res) => {
   const templateVars = {
-    urls: urlDatabase,
-    users: users,
-    email: req.cookies.email,
-    cookie: req.cookies,
+    // urls: urlDatabase,
+    // users: users,
+    // email: req.cookies.email,
+    // cookie: req.cookies,
+    user_id: req.cookies.user_id
   };
-  // console.log('cookies', req.cookies)
   res.render('registration', templateVars);
 });
 
@@ -81,50 +73,49 @@ router.post('/register', (req, res, next) => {
   }
 
   const randomId = generateRandomString();
-  users[randomId] = { id: randomId, email: req.body.email, password: req.body.password };
-  // console.log(users);
-  res.cookie('user_id', randomId);
-  res.cookie('email', email);
-  res.cookie('users', users);
-  // console.log(res.cookies);
-  // console.log(req.cookies);
+  users[randomId] = { id: randomId, email: req.body.email, password: bcrypt.hashSync(req.body.password, 10) };
+  res.cookie('user_id', users[randomId]);
   res.redirect('/urls');
 });
 
 // logout
 router.post('/logout', (req, res) => {
   res.clearCookie('user_id');
-  res.clearCookie('email');
-  res.clearCookie('users');
-  res.redirect('/urls');
-});
-
-// database of urls
-router.get('/urls', (req, res) => {
-  const templateVars = {
-    urls: urlDatabase,
-    email: req.cookies.email,
-    cookie: req.cookies,
-  };
-  console.log(templateVars);
-  res.render('urls-index', templateVars);
+  res.redirect('/login');
 });
 
 // new url form
 router.get('/urls/new', (req, res) => {
   const templateVars = {
+    user_id: req.cookies.user_id,
     urls: urlDatabase,
-    email: req.cookies.email,
-    cookie: req.cookies,
   };
-  console.log(req.cookies.email);
-  if (req.cookies.email === undefined) {
+  if (req.cookies.user_id === undefined) {
     res.redirect('/login');
   }
   res.render('urls-new', templateVars);
 });
 
-// render specific url
+// create new short url with form
+router.post('/urls', (req, res) => {
+  const tempShortUrl = generateRandomString();
+
+  urlDatabase[tempShortUrl] = { 'longURL': req.body.longURL, user_id: req.cookies.user_id.id };
+  res.redirect(`/urls/${tempShortUrl}`);
+  console.log(urlDatabase);
+});
+
+// database of urls
+router.get('/urls', (req, res) => {
+  const templateVars = {
+    user_id: req.cookies.user_id,
+    urls: urlDatabase,
+  };
+  res.render('urls-index', templateVars);
+});
+
+
+// render specific url (do you need all these variables?)
 router.get('/urls/:id', (req, res) => {
   let shortURL = req.params.id;
   const templateVars = {
@@ -132,21 +123,20 @@ router.get('/urls/:id', (req, res) => {
     longURL: urlDatabase[shortURL].longURL,
     email: req.cookies.email,
     cookie: req.cookies,
-    // username: req.cookies.username,
+    user_id: req.cookies.user_id,
   };
-  // console.log(urlDatabase);
-  // console.log(req.params.id);
   res.render('urls-show', templateVars);
 });
 
 // edit existing url
 router.post('/urls/:id', (req, res) => {
   const targetId = req.params.id;
+  const user_id = req.cookies.user_id;
   urlDatabase[targetId] = req.body.longURL;
   res.redirect('/urls');
 });
 
-// json
+// json (ERASE)
 // router.get('/urls.json', (req, res) => {
 //     res.json(urlDatabase);
 // });
@@ -157,14 +147,7 @@ router.get('/u/:shortURL', (req, res) => {
   res.redirect(longURL);
 });
 
-// create new short url with form
-router.post('/urls', (req, res) => {
-  const tempShortUrl = generateRandomString();
 
-  urlDatabase[tempShortUrl] = { 'longURL': req.body.longURL, user_id: req.cookies.user_id };
-  res.redirect(`/urls/${tempShortUrl}`);
-  console.log(urlDatabase);
-});
 
 // delete from database
 router.post('/urls/:id/delete', (req, res) => {

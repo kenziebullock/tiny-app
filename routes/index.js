@@ -114,10 +114,11 @@ router.get('/urls', (req, res) => {
 router.get('/urls/new', (req, res) => {
   const templateVars = {
     urls: urlDatabase,
-    email: 'urls/new',
+    email: req.cookies.email,
     cookie: req.cookies,
   };
-  if (!res.cookies) {
+  console.log(req.cookies.email);
+  if (req.cookies.email === undefined) {
     res.redirect('/login');
   }
   res.render('urls-new', templateVars);

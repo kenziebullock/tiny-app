@@ -117,6 +117,9 @@ router.get('/urls/new', (req, res) => {
     email: 'urls/new',
     cookie: req.cookies,
   };
+  if (!res.cookies) {
+    res.redirect('/login');
+  }
   res.render('urls-new', templateVars);
 });
 

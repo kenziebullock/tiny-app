@@ -8,11 +8,12 @@
 <body>
     
     <!-- display the long URL and its shortened form -->
-    <p><h3>ShortURL: <%= shortURL %></h3></p>
+    <p><h3>Short URL: <%= shortURL %></h3></p>
+    <p><h3>Long URL: <%= longURL %></h3></p>
     <!-- form with two elements a text input and a button -->
     <p>
         <form method="POST" action="/urls/<%= shortURL %>">
-            <input id ="longURL" type="text" name="longURL" placeholder="<%= longURL[shortURL] %>" style="width: 200px">
+            <input id ="longURL" type="text" name="longURL" placeholder="<%= longURL %>" style="width: 200px">
             <button type="submit">Update</button>
         </form>
     </p>

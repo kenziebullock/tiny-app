@@ -126,13 +126,16 @@ router.get('/urls/new', (req, res) => {
 
 // render specific url
 router.get('/urls/:id', (req, res) => {
+  let shortURL = req.params.id;
   const templateVars = {
-    shortURL: req.params.id,
-    longURL: urlDatabase,
-    email: 'urls/:id',
+    shortURL: shortURL,
+    longURL: urlDatabase[shortURL].longURL,
+    email: req.cookies.email,
     cookie: req.cookies,
     // username: req.cookies.username,
   };
+  // console.log(urlDatabase);
+  // console.log(req.params.id);
   res.render('urls-show', templateVars);
 });
 
@@ -157,8 +160,10 @@ router.get('/u/:shortURL', (req, res) => {
 // create new short url with form
 router.post('/urls', (req, res) => {
   const tempShortUrl = generateRandomString();
-  urlDatabase[tempShortUrl] = req.body.longURL;
+
+  urlDatabase[tempShortUrl] = { 'longURL': req.body.longURL, user_id: req.cookies.user_id };
   res.redirect(`/urls/${tempShortUrl}`);
+  console.log(urlDatabase);
 });
 
 // delete from database

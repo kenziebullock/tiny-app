@@ -3,7 +3,8 @@
 // code dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const users = require('./data/users');
 const app = express();
 const index = require('./routes/index');
@@ -11,7 +12,9 @@ const index = require('./routes/index');
 // middleware
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieSession({
+  secret: 'something',
+}));
 
 // css file usage
 app.use('/public', express.static('/public'));

@@ -10,8 +10,8 @@
     <ul>
     
     <% for (const key in urls) { %>
-    
-    <% if (user_id.id === urls[key].user_id) { %>
+
+    <% if (email === urls[key].user_id || user_id === urls[key].user_id) { %>
         <li><%= key %> = <%= urls[key].longURL %></li>
         <form method="POST" action='/urls/<%= key %>/delete'>
         <button>Delete</button>

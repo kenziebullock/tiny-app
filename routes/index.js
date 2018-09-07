@@ -7,26 +7,60 @@ const urlDatabase = require('../data/urls-database');
 
 // home page
 router.get('/', (req, res) => {
-  const templateVars = users;
+  const templateVars = { 
+    users: users,
+    email: req.cookies.email,
+    cookie: req.cookies,
+  };
   // console.log(templateVars);
-  res.render('urls-new', users);
+
+  res.render('urls-new', templateVars);
 });
 
 // login page
 router.get('/login', (req, res) => {
-  res.render('login');
+  const templateVars = {
+    urls: urlDatabase,
+    users: users,
+    email: req.cookies.email,
+    cookie: req.cookies,
+  };
+  res.render('login', templateVars);
+});
+
+// respond to login with a cookie
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const userArray = Object.values(users);
+  const user = userArray.find(u => u.email === email);
+  const pass = userArray.find(u => u.password === password);
+  if (!user) {
+    res.redirect('/login');
+  }
+  if (!pass) {
+    res.redirect('/login');
+  }
+
+  res.cookie('user_id', user.id);
+  res.cookie('email', email);
+  res.cookie('users', users);
+  console.log(res.cookie);
+  res.redirect('/');
 });
 
 // registration page
 router.get('/register', (req, res) => {
-  // const templateVars = {
-  //   urls: urlDatabase,
-  //   username: req.cookies.username,
-  // };
-  res.render('registration');
+  const templateVars = {
+    urls: urlDatabase,
+    users: users,
+    email: req.cookies.email,
+    cookie: req.cookies,
+  };
+  // console.log('cookies', req.cookies)
+  res.render('registration', templateVars);
 });
 
-// generate new user
+// generate new user from registration
 router.post('/register', (req, res, next) => {
   const { email, password } = req.body;
   const userArray = Object.values(users);
@@ -48,27 +82,42 @@ router.post('/register', (req, res, next) => {
 
   const randomId = generateRandomString();
   users[randomId] = { id: randomId, email: req.body.email, password: req.body.password };
+  // console.log(users);
   res.cookie('user_id', randomId);
+  res.cookie('email', email);
+  res.cookie('users', users);
+  // console.log(res.cookies);
+  // console.log(req.cookies);
   res.redirect('/urls');
 });
 
-// error page
-router.get('/errors', (req, res) => {
-  res.render('error');
+// logout
+router.post('/logout', (req, res) => {
+  res.clearCookie('user_id');
+  res.clearCookie('email');
+  res.clearCookie('users');
+  res.redirect('/urls');
 });
 
 // database of urls
 router.get('/urls', (req, res) => {
   const templateVars = {
     urls: urlDatabase,
-    // username: req.cookies.username,
+    email: req.cookies.email,
+    cookie: req.cookies,
   };
+  console.log(templateVars);
   res.render('urls-index', templateVars);
 });
 
 // new url form
 router.get('/urls/new', (req, res) => {
-  res.render('urls-new');
+  const templateVars = {
+    urls: urlDatabase,
+    email: 'urls/new',
+    cookie: req.cookies,
+  };
+  res.render('urls-new', templateVars);
 });
 
 // render specific url
@@ -76,6 +125,8 @@ router.get('/urls/:id', (req, res) => {
   const templateVars = {
     shortURL: req.params.id,
     longURL: urlDatabase,
+    email: 'urls/:id',
+    cookie: req.cookies,
     // username: req.cookies.username,
   };
   res.render('urls-show', templateVars);
@@ -113,26 +164,9 @@ router.post('/urls/:id/delete', (req, res) => {
   res.redirect('/urls');
 });
 
-// respond to login with a cookie
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  const userArray = Object.values(users);
-  const user = userArray.find(u => u.email === email);
-  const pass = userArray.find(u => u.password === password);
-  if (!user) {
-    res.redirect('/login');
-  }
-  if (!pass) {
-    res.redirect('/login');
-  }
-
-  res.cookie('user_id', user.id);
-  res.redirect('/');
-});
-
-router.post('/logout', (req, res) => {
-  res.clearCookie('user_id');
-  res.redirect('/urls');
+// error page
+router.get('/errors', (req, res) => {
+  res.render('error');
 });
 
 // function to create random 6-char string for short url

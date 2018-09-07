@@ -7,9 +7,20 @@
 
 <header><h3>Tiny App</h3></header>
 
-<nav>
-    <ul class="nav nav-pills pull-right">
-        <li role="presentation"><a href="/register">Register</a></li>
-        <li role="presentation"><a href="/login">Login</a></li>
-    </ul>
-</nav>
+<% if (email) { %>
+    <%= email %>
+    <form method="POST" action="/logout">
+        <button>Logout</button>
+    </form>
+<% } else { %>
+    <nav>
+        <ul class="">
+            <li role=""><a href="/register">Register</a></li>
+            <li role=""><a href="/login">Login</a></li>
+        </ul>
+    </nav>
+    
+
+
+<% } %>
+

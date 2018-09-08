@@ -5,19 +5,19 @@
 
 <% include partials/_header %>
 
-<body>
-<div class="container">
-    <!-- display the long URL and its shortened form -->
-    <p><h3>Short URL:<a href="http://localhost:8080/u/<%= shortURL %>"><%= shortURL %></a></h3></p>
-    <p><h3>Long URL: <a href="<%= longURL %>"><%= longURL %></a></h3></p>
-    <!-- form with two elements a text input and a button -->
-    <p>
-        <form method="POST" action="/urls/<%= shortURL %>">
-            <input id ="longURL" type="text" name="longURL" placeholder="<%= longURL %>" style="width: 400px">
-            <button type="submit">Update</button>
-        </form>
-    </p>
-</div>
+<body style="font-size:20px; padding:50px;">
+    <div class="container p-3 mb-2 bg-light text-dark">
+        <!-- display the long URL and its shortened form -->
+        <p><h5>Short URL: <a href="http://localhost:8080/u/<%= shortURL %>"><%= shortURL %></a></h5></p>
+        <p><h5>Long URL: <a href="<%= longURL %>"><%= longURL %></a></h5></p>
+        <!-- form with two elements a text input and a button -->
+        <p>
+            <form method="POST" action="/urls/<%= shortURL %>">
+                <input id ="longURL" type="text" name="longURL" placeholder="<%= longURL %>" style="width: 400px">
+                <button class="btn btn-outline-primary" type="submit">Update</button>
+            </form>
+        </p>
+    </div>
 </body>
 
 </html>

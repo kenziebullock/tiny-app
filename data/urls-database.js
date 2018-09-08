@@ -8,10 +8,10 @@ const urlDatabase = {
       user_id: 'dude',
       
     },
-    '9sm5xK':
+  '9sm5xK':
     {
       longURL: 'http://www.google.com',
-      user_id: 'mark'
+      user_id: 'mark',
     },
 };
 

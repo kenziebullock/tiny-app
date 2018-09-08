@@ -32,7 +32,7 @@ router.post('/login', (req, res) => {
   const userArray = Object.values(users);
   const user = userArray.find(u => u.email === email);
 
-  // error messages for incomplete
+  // error messages for incomplete form
   if (!email) {
     error = 'No email address entered!';
     res.redirect('/login');
@@ -40,11 +40,12 @@ router.post('/login', (req, res) => {
     error = 'No password entered!';
     res.redirect('/login');
   }
-  // check password
   if (!user) {
     error = 'Incorrect login credentials!';
     res.redirect('/login');
   }
+
+  // check password
   bcrypt.compare(password, user.password, (err, result) => {
     if (result) {
       // successful login
@@ -72,11 +73,11 @@ router.get('/register', (req, res) => {
 });
 
 // generate new user from registration with POST request
-router.post('/register', (req, res, next) => {
-  // const { email, password } = req.body;
+router.post('/register', (req, res) => {
   const userArray = Object.values(users);
   const user = userArray.find(u => u.email === req.body.email);
 
+  // error handling
   if (!req.body.email) {
     error = 'No email address entered!';
     res.redirect('/register');
@@ -120,6 +121,7 @@ router.get('/urls/new', (req, res) => {
 
 // database of urls
 router.get('/urls', (req, res) => {
+  error = '';
   const templateVars = {
     user_id: req.session.user_id,
     urls: urlDatabase,
@@ -143,7 +145,7 @@ router.post('/urls', (req, res) => {
 
 // render specific url (do you need all these variables?)
 router.get('/urls/:id', (req, res) => {
-  let shortURL = req.params.id;
+  const shortURL = req.params.id;
   const user_id = req.session.user_id;
   if (!urlDatabase[shortURL]) {
     error = 'This short URL does not exist!';
@@ -159,7 +161,7 @@ router.get('/urls/:id', (req, res) => {
   
 
   if (user_id === urlDatabase[shortURL].user_id) {
-    res.render('urls-show', templateVars);  
+    res.render('urls-show', templateVars);
   } else {
     error = 'Not authorized!';
     res.redirect('/urls');
@@ -174,10 +176,10 @@ router.post('/urls/:id', (req, res) => {
   res.redirect('/urls');
 });
 
-// json (ERASE?)
-// router.get('/urls.json', (req, res) => {
-//     res.json(urlDatabase);
-// });
+// json (compass requirement)
+router.get('/urls.json', (req, res) => {
+  res.json(urlDatabase);
+});
 
 // redirect to actual url through short url
 router.get('/u/:shortURL', (req, res) => {
@@ -195,11 +197,6 @@ router.post('/urls/:id/delete', (req, res) => {
   delete urlDatabase[targetId];
   res.redirect('/urls');
 });
-
-// // error page
-// router.get('/errors', (req, res) => {
-//   res.render('error');
-// });
 
 // function to create random 6-char string for short url
 function generateRandomString() {

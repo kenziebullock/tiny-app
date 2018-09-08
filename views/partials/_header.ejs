@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div div class="p-3 mb-2 bg-secondary text-white">
+<div class="p-3 mb-2 bg-secondary text-white">
     <div class="row">
         
         <div class="col">
@@ -20,25 +20,22 @@
         <div class="col-lg-4">
             <p></p>
         </div>
-        
-        <div class="col">
+        <div class="btn-group">
             <% if (user_id) { %>
-                <div class="col">
+                
             <form method="POST" action="/logout">
                 <button class="btn btn-primary">LOGOUT</button>
             </form>
-        </div>
-        <div class="col">
             <form method="GET" action="/urls">
-                <div class="button">
-                    <button class="btn btn-primary">MY URLS</button>
-                </div>
+                
+                <button class="btn btn-primary">MY URLS</button>
+                
             </form>
         </div>
             <% } else { %>
-            <div class="row" style="margin-left: 100px;">
-                <div class="col"><a href="/login">LOGIN</a></div>
-                <div class="col"><a href="/register">REGISTER</a></div> 
+            <div class="btn-group" style="margin-left: 100px;">
+                <a role="button" class="btn btn-primary" href="/login">LOGIN</a>
+                <a role="button" class="btn btn-primary" href="/register">REGISTER</a>
             </div>
             <% } %>
         </div>

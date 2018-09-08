@@ -3,19 +3,18 @@
 
 <html lang="en">
 
-<% include partials/_header %>
-
-<body>
+<body style="font-size:20px; padding:50px;">
+        <% include partials/_header %>
     <!-- a form for user registration -->
-    <div class="container">
+    <div class="container p-3 mb-2 bg-light text-dark">
     <form method="POST" action="/register" style="margin:150px;">
         <fieldset>
-                <legend>Register new user:</legend>
-        <label for ="email">Enter email:</label>
-        <input id="email" type="text" name="email" placeholder="" style="width: 200px">
-        <label for ="password">Password:</label>
-        <input id="password" type="password" name="password" placeholder="" style="width: 200px">
-        <input type="submit" value="Register">
+            <legend>Register new user:</legend>
+            <label for ="email">Enter email:</label>
+                <input id="email" type="text" name="email" placeholder="" style="width: 200px">
+            <label for ="password">Password:</label>
+                <input id="password" type="password" name="password" placeholder="" style="width: 200px">
+            <input type="submit" value="Register">
         </fieldset>
     </form>
     <% if (error) { %>

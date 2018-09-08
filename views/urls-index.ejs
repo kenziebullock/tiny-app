@@ -5,7 +5,7 @@
 
 <% include partials/_header %>
 
-<body>
+<body style="font-size:20px; padding:50px;">
     <!-- a list or table of the URLs and their shortened forms -->
     <div class="container">
         <table class="table">
@@ -23,8 +23,8 @@
                     <td><a href="urls[key].longURL"><%= urls[key].longURL %></a></td>
                     <td><a href="http://localhost:8080/u/<%= key %>">http://localhost:8080/u/<%= key %></a></td>
                     
-                    <td><form method="GET" action='/urls/<%= key %>'><button>Edit</button></form></td>
-                    <td><form method="POST" action='/urls/<%= key %>/delete'><button>Delete</button></form></td>
+                    <td><form method="GET" action='/urls/<%= key %>'><button class="btn btn-outline-primary">Edit</button></form></td>
+                    <td><form method="POST" action='/urls/<%= key %>/delete'><button class="btn btn-outline-primary">Delete</button></form></td>
                 </tr>
             </tbody>
             

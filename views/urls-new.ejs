@@ -3,11 +3,16 @@
 
     <body style="font-size:20px; padding:50px;">
         <% include partials/_header %>
+        <div class="container p-3 mb-2 bg-light text-dark">
         <form action="/urls" method="POST" style="margin:150px;">
-            <label for ="longURL">Enter a URL:</label>
-            <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-            <input type="submit" value="Submit">
+            <fieldset>
+            <label for ="longURL"></label>
+            <input id="longURL" type="text" name="longURL" placeholder="Enter URL to shorten it" style="width: 600px">
+            <input type="submit" value="Shorten">
+        </fieldset>
+    
         </form>
+    </div>
     </body>
 
 </html>

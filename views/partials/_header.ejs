@@ -2,25 +2,53 @@
 
 <head>
     <title>TinyApp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="../../public/assets/style.css" rel="stylesheet" type="text/css">
 </head>
 
-<header><h2>Tiny App</h2></header>
+<body>
+<div div class="p-3 mb-2 bg-secondary text-white">
+    <div class="row">
+        
+        <div class="col">
+            <h3>Tiny App URL-Shortener</h3>
+            <% if (user_id) { %>
+            <p><%= email %></p>
+            <% } %>
+        </div>
+        
+        <div class="col-lg-4">
+            <p></p>
+        </div>
+        
+        <div class="col">
+            <% if (user_id) { %>
+                <div class="col">
+            <form method="POST" action="/logout">
+                <button class="btn btn-primary">LOGOUT</button>
+            </form>
+        </div>
+        <div class="col">
+            <form method="GET" action="/urls">
+                <div class="button">
+                    <button class="btn btn-primary">MY URLS</button>
+                </div>
+            </form>
+        </div>
+            <% } else { %>
+            <div class="row" style="margin-left: 100px;">
+                <div class="col"><a href="/login">LOGIN</a></div>
+                <div class="col"><a href="/register">REGISTER</a></div> 
+            </div>
+            <% } %>
+        </div>
+   
+    </div>
+</div>
 
-<% if (user_id) { %>
-    <h4>Welcome, </h4>
-    <%= email %>
+</body>
     
-    <form method="POST" action="/logout">
-        <button>Logout</button>
-    </form>
-    <form method="GET" action="/urls">
-        <button>My URLS</button>
-    </form>
-<% } else { %>
     
-    <button><a href="/register">Register</a></button>
-    <button><a href="/login">Login</a></button>
 
-<% } %>
+
 

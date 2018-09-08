@@ -5,12 +5,13 @@ const urlDatabase = {
   'b2xVn2':
     {
       longURL: 'http://www.lighthouselabs.ca',
-      user_id: 'dude@gmail.com'
+      user_id: 'dude',
+      
     },
     '9sm5xK':
     {
       longURL: 'http://www.google.com',
-      user_id: 'mark@gmail.com'
+      user_id: 'mark'
     },
 };
 

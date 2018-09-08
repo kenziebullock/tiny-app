@@ -3,14 +3,24 @@
     <% include partials/_header %>
 
     <body style="">
-            <form method="POST" action="/login">
-                
+        <div class="container">
+            <form method="POST" action="/login" style="margin:150px;">
+                <fieldset>
+                        <legend>Login to the site</legend>
                 <label for ="email">Enter email:</label>
-                <input id="email" name="email" type="text" placeholder="Enter email.." style="width: 100px">
+                <input id="email" name="email" type="text" placeholder="" style="width: 200px">
                 <label for ="password">Password:</label>
-                <input id="password" name="password" type="password" placeholder="Enter password.." style="width: 100px">
+                <input id="password" name="password" type="password" placeholder="" style="width: 200px">
                 <button type="submit">Login</button>
-               
+            </fieldset>
             </form>
+            
+                <% if (error) { %>
+                    <div class="alert alert-danger" role="alert" style="text-align: center">
+                    <%= error %>
+                    </div>
+                <% } %>
+           
+        </div>
     </body>
 </html>

@@ -16,7 +16,9 @@
     "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "fs": "0.0.1-security"
+    "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "req-flash": "0.0.3"
   },
   "devDependencies": {
     "eslint": "^5.5.0",

@@ -3,22 +3,28 @@
 // code dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+// const path = require('path');
 const users = require('./data/users');
 const app = express();
 const index = require('./routes/index');
+// const session = require('express-session');
+// const flash = require('req-flash');
 
 // middleware
+// app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cookieSession({
   secret: 'something',
 }));
+// app.use(session({ secret: '234'}));
+// app.use(flash());
 
 // css file usage
-app.use('/public', express.static('/public'));
-
+// app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 // set up server
@@ -39,7 +45,9 @@ app.listen(PORT, () => {
 //   // renders error page
 //   // console.log(err.stack);
 //   res.status(err.status || 500);
-//   res.render('error');
+//   //const errorz = res.status;
+//   //console.log(errorz);
+//   res.render('error', err);
 //   // next(err);
 // });
 

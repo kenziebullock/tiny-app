@@ -7,28 +7,43 @@
 
 <body>
     <!-- a list or table of the URLs and their shortened forms -->
-    <ul>
-    
-    <% for (const key in urls) { %>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Long Url:</th>
+                <th scope="col">Short URL:</th>
+            </thead>
+            <% let i = 1; %>
+            <% for (const key in urls) { %>
+                <% if (email === urls[key].user_id || user_id === urls[key].user_id) { %> 
+            <tbody>
+                <tr>
+                    <th scope="row"><%= i; %><% i++; %></th>
+                    <td><a href="urls[key].longURL"><%= urls[key].longURL %></a></td>
+                    <td><a href="http://localhost:8080/u/<%= key %>">http://localhost:8080/u/<%= key %></a></td>
+                    
+                    <td><form method="GET" action='/urls/<%= key %>'><button>Edit</button></form></td>
+                    <td><form method="POST" action='/urls/<%= key %>/delete'><button>Delete</button></form></td>
+                </tr>
+            </tbody>
+            
+            <% } %>
+            <% }; %>
 
-    <% if (email === urls[key].user_id || user_id === urls[key].user_id) { %>
-        <li><%= key %> = <%= urls[key].longURL %></li>
-        <form method="POST" action='/urls/<%= key %>/delete'>
-        <button>Delete</button>
-    </form>
-    <form method="GET" action='/urls/<%= key %>'>
-        <button>Edit</button>
-    </form>
-    <% } %>
-    <% }; %>
-    
-    </ul> 
+        </table> 
+    </div>
     
     <!-- link for shortening a new URL href='#'  -->
-    <form method="GET" action="urls/new">
-        <button>New URL</button>
-    </form>
-    <!--  -->
+    <div class="container">
+        <form method="GET" action="urls/new">
+            <button class="btn btn-primary">New URL</button>
+        </form>
+    </div>  
+    <% if (error) { %>
+        <div class="alert alert-danger" role="alert" style="text-align: center">
+        <%= error %>
+        </div>
+    <% } %>
 </body>
-
 </html>
